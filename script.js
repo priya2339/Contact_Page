@@ -28,6 +28,9 @@ function addContact() {
         phone
     };
 
+    saveContactsToLocalStorage(contact);
+    displayContact(contact);
+
     nameInput.value = "";
     emailInput.value = "";
     phoneInput.value = "";
@@ -74,7 +77,7 @@ function editContact(id){
 function deleteContact(id){
     const contacts = getContactFromLocalStorage();
     const updateContacts = contacts.filter(contact => contact.id !== id);
-    saveContactsToLocalStorage(updateContacts);
+    localStorage.setItem("contacts", JSON.stringify(updateContacts));
 
     refreshContactList();
 }
