@@ -75,4 +75,25 @@ function deleteContact(id){
     const contacts = getContactFromLocalStorage();
     const updateContacts = contacts.filter(contact => contact.id !== id);
     saveContactsToLocalStorage(updateContacts);
+
+    refreshContactList();
+}
+
+function getContactFromLocalStorage(){
+    return JSON.parse(localStorage.getItem("contacts")) || [];
+}
+
+function saveContactsToLocalStorage(contact){
+    const contacts = getContactFromLocalStorage();
+    contacts.push(contact);
+    saveContactsToLocalStorage(contacts);
+}
+
+function saveContactsToLocalStorage(contacts){
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+}
+
+function refreshContactList(){
+    contactTablebody.innerHTML = "";
+    loadContacts();
 }
