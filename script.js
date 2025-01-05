@@ -67,4 +67,12 @@ function editContact(id){
     nameInput.value = contactToEdit.name;
     emailInput.value = contactToEdit.email;
     phoneInput.value = contactToEdit.phone;
+
+    deleteContact(id);
+}
+
+function deleteContact(id){
+    const contacts = getContactFromLocalStorage();
+    const updateContacts = contacts.filter(contact => contact.id !== id);
+    saveContactsToLocalStorage(updateContacts);
 }
