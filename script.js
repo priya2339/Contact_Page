@@ -28,6 +28,9 @@ function addContact() {
         phone
     };
 
+    saveContactsToLocalStorage(contact);
+    displayContact(contact);
+
     nameInput.value = "";
     emailInput.value = "";
     phoneInput.value = "";
@@ -42,13 +45,13 @@ function displayContact(contact) {
     const row = document.createElement('tr');
     row.dataset.id = contact.id;
 
-    row.innerHTML = ` <td> ${contact.name}<td/>
-                      <td> ${contact.email}<td/>
-                      <td> ${contact.phone}<td/>
+    row.innerHTML = ` <td> ${contact.name}</td>
+                      <td> ${contact.email}</td>
+                      <td> ${contact.phone}</td>
                       <td class="actions">
                             <button class="edit-btn">Edit</button>
-                            <button class="delete-btn>Delete</button>
-                     </td>"`
+                            <button class="delete-btn">Delete</button>
+                     </td>`
         ;
 
     contactTablebody.appendChild(row);
@@ -59,7 +62,7 @@ function displayContact(contact) {
 
 
 function editContact(id){
-    const contacts = getContactFromLocalStorage();
+    const contacts = getContactsFromLocalStorage();
     const contactToEdit = contacts.find(contact => contact.id === id);
 
     if(!contactToEdit) return;
@@ -67,4 +70,31 @@ function editContact(id){
     nameInput.value = contactToEdit.name;
     emailInput.value = contactToEdit.email;
     phoneInput.value = contactToEdit.phone;
+
+    deleteContact(id, false);
+}
+
+function deleteContact(id, refresh = true){
+    const contacts = getContactsFromLocalStorage();
+    const updateContacts = contacts.filter(contact => contact.id !== id);
+    localStorage.setItem("contacts", JSON.stringify(updateContacts));
+
+   if (refresh) refreshContactList();
+}
+
+function getContactsFromLocalStorage(){
+    return JSON.parse(localStorage.getItem("contacts")) || [];
+}
+
+function saveContactsToLocalStorage(contact){
+    const contacts = getContactsFromLocalStorage();
+    contacts.push(contact);
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+}
+
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+
+function refreshContactList(){
+    contactTablebody.innerHTML = "";
+    loadContacts();
 }
