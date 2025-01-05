@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', loadContacts);
 
 addContactbtn.addEventListener('click', addContact);
 
-function addContact(){
+function addContact() {
 
-    const name = nameInput.value .trim();
+    const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
 
-    if(name === "" || email === "" || phone === ""){
+    if (name === "" || email === "" || phone === "") {
         alert("Please fill all the fields");
         return;
     }
@@ -33,12 +33,12 @@ function addContact(){
     phoneInput.value = "";
 }
 
-function loadContacts(){
+function loadContacts() {
     const contacts = getContactFromLocalStorage();
-    contacts.forEach(contact => displayContact(contact) );
+    contacts.forEach(contact => displayContact(contact));
 }
 
-function displayContact(contact){
+function displayContact(contact) {
     const row = document.createElement('tr');
     row.dataset.id = contact.id;
 
@@ -49,5 +49,22 @@ function displayContact(contact){
                             <button class="edit-btn">Edit</button>
                             <button class="delete-btn>Delete</button>
                      </td>"`
-                     ;
+        ;
+
+    contactTablebody.appendChild(row);
+
+    row.querySelector('.edit-btn').addEventListener("click", () => editContact(contact.id))
+    row.querySelector('.delete-btn').addEventListener("click", () => deleteContact(contact.id));
+}
+
+
+function editContact(id){
+    const contacts = getContactFromLocalStorage();
+    const contactToEdit = contacts.find(contact => contact.id === id);
+
+    if(!contactToEdit) return;
+
+    nameInput.value = contactToEdit.name;
+    emailInput.value = contactToEdit.email;
+    phoneInput.value = contactToEdit.phone;
 }
