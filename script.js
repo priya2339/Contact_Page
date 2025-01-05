@@ -42,13 +42,13 @@ function displayContact(contact) {
     const row = document.createElement('tr');
     row.dataset.id = contact.id;
 
-    row.innerHTML = ` <td> ${contact.name}<td/>
-                      <td> ${contact.email}<td/>
-                      <td> ${contact.phone}<td/>
+    row.innerHTML = ` <td> ${contact.name}</td>
+                      <td> ${contact.email}</td>
+                      <td> ${contact.phone}</td>
                       <td class="actions">
                             <button class="edit-btn">Edit</button>
                             <button class="delete-btn>Delete</button>
-                     </td>"`
+                     </td>`
         ;
 
     contactTablebody.appendChild(row);
@@ -86,12 +86,10 @@ function getContactFromLocalStorage(){
 function saveContactsToLocalStorage(contact){
     const contacts = getContactFromLocalStorage();
     contacts.push(contact);
-    saveContactsToLocalStorage(contacts);
-}
-
-function saveContactsToLocalStorage(contacts){
     localStorage.setItem("contacts", JSON.stringify(contacts));
 }
+
+    localStorage.setItem("contacts", JSON.stringify(contacts));
 
 function refreshContactList(){
     contactTablebody.innerHTML = "";
