@@ -32,3 +32,22 @@ function addContact(){
     emailInput.value = "";
     phoneInput.value = "";
 }
+
+function loadContacts(){
+    const contacts = getContactFromLocalStorage();
+    contacts.forEach(contact => displayContact(contact) );
+}
+
+function displayContact(contact){
+    const row = document.createElement('tr');
+    row.dataset.id = contact.id;
+
+    row.innerHTML = ` <td> ${contact.name}<td/>
+                      <td> ${contact.email}<td/>
+                      <td> ${contact.phone}<td/>
+                      <td class="actions">
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn>Delete</button>
+                     </td>"`
+                     ;
+}
