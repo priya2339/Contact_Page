@@ -50,7 +50,7 @@ function displayContact(contact) {
                       <td> ${contact.phone}</td>
                       <td class="actions">
                             <button class="edit-btn">Edit</button>
-                            <button class="delete-btn>Delete</button>
+                            <button class="delete-btn">Delete</button>
                      </td>`
         ;
 
@@ -62,7 +62,7 @@ function displayContact(contact) {
 
 
 function editContact(id){
-    const contacts = getContactFromLocalStorage();
+    const contacts = getContactsFromLocalStorage();
     const contactToEdit = contacts.find(contact => contact.id === id);
 
     if(!contactToEdit) return;
@@ -71,23 +71,23 @@ function editContact(id){
     emailInput.value = contactToEdit.email;
     phoneInput.value = contactToEdit.phone;
 
-    deleteContact(id);
+    deleteContact(id, false);
 }
 
-function deleteContact(id){
-    const contacts = getContactFromLocalStorage();
+function deleteContact(id, refresh = true){
+    const contacts = getContactsFromLocalStorage();
     const updateContacts = contacts.filter(contact => contact.id !== id);
     localStorage.setItem("contacts", JSON.stringify(updateContacts));
 
-    refreshContactList();
+   if (refresh) refreshContactList();
 }
 
-function getContactFromLocalStorage(){
+function getContactsFromLocalStorage(){
     return JSON.parse(localStorage.getItem("contacts")) || [];
 }
 
 function saveContactsToLocalStorage(contact){
-    const contacts = getContactFromLocalStorage();
+    const contacts = getContactsFromLocalStorage();
     contacts.push(contact);
     localStorage.setItem("contacts", JSON.stringify(contacts));
 }
